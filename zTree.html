@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>zTree</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  	<link rel="stylesheet" href="zTreeStyle.css" type="text/css">
+  	<script type="text/javascript" src="jquery-3.2.0.min.js"></script>
+  	<script type="text/javascript" src="jquery.ztree.core.js"></script>
+</head>
+<body>
+<ul id="treeDemo" class="ztree"></ul>
+<SCRIPT LANGUAGE="JavaScript">
+  	function showIconForTree(treeId, treeNode) {
+		return treeNode.level== 1;
+	};
+  var setting = {
+view: {
+	dblClickExpand: false,
+	showLine: false,
+	showIcon: showIconForTree
+},
+data: {
+simpleData: {
+enable: true
+}
+},
+callback: {
+onClick: onClick
+}
+};
+
+
+var zNodes =[
+{ id:11, pId:1, name:"父节点 1-1", open:true},
+{ id:111, pId:11, name:"叶子节点 1-1-1"},
+{ id:112, pId:11, name:"叶子节点 1-1-2"},
+{ id:113, pId:11, name:"叶子节点 1-1-3"},
+{ id:114, pId:11, name:"叶子节点 1-1-4"},
+{ id:12, pId:1, name:"父节点 1-2", open:false},
+{ id:121, pId:12, name:"叶子节点 1-2-1"},
+{ id:122, pId:12, name:"叶子节点 1-2-2"},
+{ id:123, pId:12, name:"叶子节点 1-2-3"},
+{ id:124, pId:12, name:"叶子节点 1-2-4"},
+{ id:13, pId:1, name:"父节点 1-3", open:false},
+{ id:131, pId:13, name:"叶子节点 1-3-1"},
+{ id:132, pId:13, name:"叶子节点 1-3-2"},
+{ id:133, pId:13, name:"叶子节点 1-3-3"},
+{ id:134, pId:13, name:"叶子节点 1-3-4"},
+{ id:135, pId:13, name:"叶子节点 1-3-5"},
+{ id:136, pId:13, name:"叶子节点 1-3-6"},
+{ id:137, pId:13, name:"叶子节点 1-3-7"}
+];
+
+
+function onClick(e,treeId, treeNode) {
+var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+zTree.expandNode(treeNode);
+}
+
+
+$(document).ready(function(){
+$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+});
+window.onload=function(){
+	$("#treeDemo>li").each(function(){
+		if($(this).children("ul").css("display")=="block"){
+			$(this).children("a").addClass("active");
+		}
+	});
+	$("#treeDemo").on("click","li.level0>a",function(){
+		if(!($(this).hasClass("active"))){
+			$(this).addClass("active");
+		}else{
+			$(this).removeClass("active");
+		}
+	});
+}
+  </SCRIPT>
+</body>
+</html>
